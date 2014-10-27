@@ -16,8 +16,8 @@
         // 由于开发时需要经常调试，css静态资源容易出现缓存，可以通过map来做开发版本控制，比如带个时间戳：map: ['.css', '.css?v=' + new Date().getTime()]
         map: [],
 
-        // 设置url中的变量路径，如 'app/{lang}/test' vars: {lang: 'en'} => 'app/en/test'
-        vars: false,
+        // proload
+        proload: [],
 
         /**
          * 参数初始化配置，多个配置对象会合并
@@ -28,7 +28,7 @@
             if(conf.base){
                 seacss.base = conf.base;
                 seacss.base.lastIndexOf('/') === seacss.base.length - 1 ? null : seacss.base += '/';
-            }else{
+            }else if(seacss.base === ''){
                 seacss.base = getBaseUrl();
             }
 
@@ -36,7 +36,7 @@
             if(conf.combobase){
                 seacss.combobase = conf.combobase;
                 seacss.combobase.lastIndexOf('/') === seacss.combobase.length - 1 ? null : seacss.combobase += '/';
-            }else{
+            }else if(seacss.combobase === ''){
                 seacss.combobase = seacss.base;
             }
 
@@ -46,8 +46,8 @@
             // 设置alias
             extend(seacss.alias, conf.alias);
 
-            // 设置vars
-            extend(seacss.vars, conf.vars);
+            // 设置proload
+            extendArray(seacss.proload, conf.preload);
 
             // 设置map
             typeof conf.map === 'object' && conf.map instanceof Array ? seacss.map = conf.map : null;
@@ -66,6 +66,16 @@
         use: function(paths){
             if(typeof paths !== 'string' && !(paths instanceof Array)){
                 return;
+            }
+
+            // preload
+            if(seacss.proload.length > 0){
+                var tmp = [];
+                extendArray(tmp, seacss.proload);
+                seacss.proload = [];
+                for(var i = 0,l = tmp.length;i < l;i++){
+                    seacss.use(tmp[i]);
+                }
             }
 
             // head标签
@@ -164,7 +174,7 @@
             var scripts = document.scripts;
             for(var i = 0,l = scripts.length;i < l;i++){
                 if(scripts[i].src.indexOf('seacss.js') > 0){
-                    __base = scripts[i].src.substring(0, scripts[i].src.lastIndexOf('/') - 1);
+                    __base = scripts[i].src.substring(0, scripts[i].src.lastIndexOf('/'));
                     break;
                 }
             }
@@ -189,19 +199,9 @@
         var tmp = document.createElement('link');
         tmp.setAttribute("rel", "stylesheet");
         tmp.setAttribute("type", "text/css");
-
-        // 替换vars
-        var url = link.url;
-        var itm;
-        if(seacss.vars){
-            for(itm in seacss.vars){
-                url = url.replace('{' + itm + '}', seacss.vars[itm]);
-            }
-        }
-
-        tmp.setAttribute("href", url);
+        tmp.setAttribute("href", mapCss(link.url));
         if(link.attrs){
-            for(itm in link.attrs){
+            for(var itm in link.attrs){
                 tmp.setAttribute(itm, link.attrs[itm]);
             }
         }
@@ -241,7 +241,28 @@
             src[itm] = exts[itm];
         }
     }
-	
+
+
+    /**
+    * 扩展数组值
+    * @param   {array}    src     需要扩展的对象
+    * @param   {array}    exts    扩展的属性对象
+    */
+    function extendArray(src, exts){
+        if(!exts || !(exts instanceof Array)){
+            return;
+        }
+        var tmp = {};
+        for(var i = 0, l = src.length;i < l;i++){
+            tmp[src[i]] = 1;
+        }
+        for(i = 0,l = exts.length;i < l;i++){
+            if(!(exts[i] in tmp)){
+                src.push(exts[i]);
+                tmp[exts[i]] = 1;
+            }
+        }
+    }
 
     /**
     * ====================
