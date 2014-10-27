@@ -1,30 +1,30 @@
 ;(function(window){
     var seacss = {
 
-        // Í¬seajsµÄbase£¬Ä£¿éÏµÍ³µÄ»ù´¡Â·¾¶£¬Ò»°ãÉèÖÃÓëseajsÍ¬Ò»Öµ
+        // åŒseajsçš„baseï¼Œæ¨¡å—ç³»ç»Ÿçš„åŸºç¡€è·¯å¾„ï¼Œä¸€èˆ¬è®¾ç½®ä¸seajsåŒä¸€å€¼
         base: '',
 
-        // ÇëÇóºÏ²¢Ñ¹ËõºóµÄcssÎÄ¼şËùÔÚµÄ»ù´¡Â·¾¶£¬±ØĞëÖ¸¶¨£¬·ñÔòÈİÒ×³öÏÖÕÒ²»µ½ÎÄ¼ş
+        // è¯·æ±‚åˆå¹¶å‹ç¼©åçš„cssæ–‡ä»¶æ‰€åœ¨çš„åŸºç¡€è·¯å¾„ï¼Œå¿…é¡»æŒ‡å®šï¼Œå¦åˆ™å®¹æ˜“å‡ºç°æ‰¾ä¸åˆ°æ–‡ä»¶
         combobase: '',
 
-        // ÎªtrueÊ±£¬¶ÔcssµÄÇëÇó¶¼×ßbaseÂ·¾¶£¬ÈôÎªfalse£¬Ôò×ßcombocssÂ·¾¶£»ÕâÀïÎª¿ª·¢ºÍ²âÊÔ&·¢²¼»·¾³×öÇĞ»»µ÷ÊÔÊ¹ÓÃ
+        // ä¸ºtrueæ—¶ï¼Œå¯¹cssçš„è¯·æ±‚éƒ½èµ°baseè·¯å¾„ï¼Œè‹¥ä¸ºfalseï¼Œåˆ™èµ°combocssè·¯å¾„ï¼›è¿™é‡Œä¸ºå¼€å‘å’Œæµ‹è¯•&å‘å¸ƒç¯å¢ƒåšåˆ‡æ¢è°ƒè¯•ä½¿ç”¨
         debug: true,
 
-        // ¼ÓÔØµÄcssµÄ±ğÃû£¨ËõĞ´£©
+        // åŠ è½½çš„cssçš„åˆ«åï¼ˆç¼©å†™ï¼‰
         alias: {},
 
-        // ÓÉÓÚ¿ª·¢Ê±ĞèÒª¾­³£µ÷ÊÔ£¬css¾²Ì¬×ÊÔ´ÈİÒ×³öÏÖ»º´æ£¬¿ÉÒÔÍ¨¹ımapÀ´×ö¿ª·¢°æ±¾¿ØÖÆ£¬±ÈÈç´ø¸öÊ±¼ä´Á£ºmap: ['.css', '.css?v=' + new Date().getTime()]
+        // ç”±äºå¼€å‘æ—¶éœ€è¦ç»å¸¸è°ƒè¯•ï¼Œcssé™æ€èµ„æºå®¹æ˜“å‡ºç°ç¼“å­˜ï¼Œå¯ä»¥é€šè¿‡mapæ¥åšå¼€å‘ç‰ˆæœ¬æ§åˆ¶ï¼Œæ¯”å¦‚å¸¦ä¸ªæ—¶é—´æˆ³ï¼šmap: ['.css', '.css?v=' + new Date().getTime()]
         map: [],
 
         // proload
         proload: [],
 
         /**
-         * ²ÎÊı³õÊ¼»¯ÅäÖÃ£¬¶à¸öÅäÖÃ¶ÔÏó»áºÏ²¢
-         * @param   {object}    conf    Óëseacss¶ÔÓ¦µÄËÄ¸öÊôĞÔµÄÅäÖÃ¶ÔÏó
+         * å‚æ•°åˆå§‹åŒ–é…ç½®ï¼Œå¤šä¸ªé…ç½®å¯¹è±¡ä¼šåˆå¹¶
+         * @param   {object}    conf    ä¸seacsså¯¹åº”çš„å››ä¸ªå±æ€§çš„é…ç½®å¯¹è±¡
          */
         config: function(conf){
-            // ÉèÖÃbase£¬Ä¬ÈÏÎªseacssËùÔÚÄ¿Â¼Â·¾¶
+            // è®¾ç½®baseï¼Œé»˜è®¤ä¸ºseacssæ‰€åœ¨ç›®å½•è·¯å¾„
             if(conf.base){
                 seacss.base = conf.base;
                 seacss.base.lastIndexOf('/') === seacss.base.length - 1 ? null : seacss.base += '/';
@@ -32,7 +32,7 @@
                 seacss.base = getBaseUrl();
             }
 
-            // ÉèÖÃcombobase£¬Í¬base
+            // è®¾ç½®combobaseï¼ŒåŒbase
             if(conf.combobase){
                 seacss.combobase = conf.combobase;
                 seacss.combobase.lastIndexOf('/') === seacss.combobase.length - 1 ? null : seacss.combobase += '/';
@@ -40,27 +40,27 @@
                 seacss.combobase = seacss.base;
             }
 
-            // ÉèÖÃdebug
+            // è®¾ç½®debug
             typeof conf.debug === 'boolean' ? seacss.debug = conf.debug : null;
 
-            // ÉèÖÃalias
+            // è®¾ç½®alias
             extend(seacss.alias, conf.alias);
 
-            // ÉèÖÃproload
+            // è®¾ç½®proload
             extendArray(seacss.proload, conf.preload);
 
-            // ÉèÖÃmap
+            // è®¾ç½®map
             typeof conf.map === 'object' && conf.map instanceof Array ? seacss.map = conf.map : null;
 
-            // Ïà¹Ø³õÊ¼»¯£¬Ä¿Ç°Ö»×öaliasµÄ³õÊ¼»¯
+            // ç›¸å…³åˆå§‹åŒ–ï¼Œç›®å‰åªåšaliasçš„åˆå§‹åŒ–
             init();
         },
 
 
         /**
-         * ÇëÇócss
-         * @param   {string|array}  paths   ÇëÇóµÄcssÂ·¾¶
-         * pathsµÄÊı¾İ½á¹¹ÈçÏÂ£º
+         * è¯·æ±‚css
+         * @param   {string|array}  paths   è¯·æ±‚çš„cssè·¯å¾„
+         * pathsçš„æ•°æ®ç»“æ„å¦‚ä¸‹ï¼š
          * "xx1.css" or ["xx1.css", "xx2.css"] or ["xx1.css", ["combo1.css", "combo2.css"], ["c1.css", "c2.css"]]
          */
         use: function(paths){
@@ -78,25 +78,25 @@
                 }
             }
 
-            // head±êÇ©
+            // headæ ‡ç­¾
             var headNode = document.head;
 
             if(typeof paths === 'string'){
-                // Èç¹ûÊÇ×Ö·û´®£¬Ôò²»ĞèÒªÅĞ¶ÏÊÇ·ñÊ¹ÓÃcombo
+                // å¦‚æœæ˜¯å­—ç¬¦ä¸²ï¼Œåˆ™ä¸éœ€è¦åˆ¤æ–­æ˜¯å¦ä½¿ç”¨combo
                 loadSrcLink(paths);
             }else if(paths instanceof Array){
                 for(var i = 0,l = paths.length;i < l;i++){
                     if(typeof paths[i] === 'string'){
-                        // Èç¹ûÊÇ×Ö·û´®£¬Ôò²»ĞèÒªÅĞ¶ÏÊÇ·ñÊ¹ÓÃcombo
+                        // å¦‚æœæ˜¯å­—ç¬¦ä¸²ï¼Œåˆ™ä¸éœ€è¦åˆ¤æ–­æ˜¯å¦ä½¿ç”¨combo
                         loadSrcLink(paths[i]);
                     }else{
-                        // ¸ù¾İÊÇ·ñÊ¹ÓÃdebug£¬µ¥ÎÄ¼ş²»ÇëÇóºÏ²¢µÄÂ·¾¶£¬¶àÎÄ¼ş²ÅÇëÇó
+                        // æ ¹æ®æ˜¯å¦ä½¿ç”¨debugï¼Œå•æ–‡ä»¶ä¸è¯·æ±‚åˆå¹¶çš„è·¯å¾„ï¼Œå¤šæ–‡ä»¶æ‰è¯·æ±‚
                         if(seacss.debug){
                             for(var n = 0,m = paths[i].length;n < m;n++){
                                 loadSrcLink(paths[i][n]);
                             }
                         }else{
-                            // Â·¾¶Æ´½ÓÎª: app/xx1&xx2&xx3.css
+                            // è·¯å¾„æ‹¼æ¥ä¸º: app/xx1&xx2&xx3.css
                             loadSrcLink(seacss.combobase + paths[i].join('&') + '.css')
                         }
                     }
@@ -107,10 +107,10 @@
 
 
             function loadSrcLink(path){
-                // ÈıÖÖ¼ÓÔØÇé¿ö
-                // 1¡¢Èç¹ûÒÔ"."»ò"/"»ò"http(s):"¿ªÍ·£¬Ìí¼Óµ½__srclist
-                // 2¡¢Èç¹ûÔÚaliasÀï£¬Ôò²¹È«url
-                // 3¡¢Èç¹û·Ç1¡¢2µÄÇé¿ö£¬ÔòÖ±½ÓÇëÇó²¢Ìí¼Óµ½__srclist
+                // ä¸‰ç§åŠ è½½æƒ…å†µ
+                // 1ã€å¦‚æœä»¥"."æˆ–"/"æˆ–"http(s):"å¼€å¤´ï¼Œæ·»åŠ åˆ°__srclist
+                // 2ã€å¦‚æœåœ¨aliasé‡Œï¼Œåˆ™è¡¥å…¨url
+                // 3ã€å¦‚æœé1ã€2çš„æƒ…å†µï¼Œåˆ™ç›´æ¥è¯·æ±‚å¹¶æ·»åŠ åˆ°__srclist
                 if(/^\.|^\/|http[s]*:|file:/.test(path) && !__srclist[path]){
                     __srclist[path] = true;
                     headNode.appendChild(loadLink({url: path}));
@@ -143,7 +143,7 @@
      */
 
     /**
-     * aliasµÄ³õÊ¼»¯
+     * aliasçš„åˆå§‹åŒ–
      */
     function init(){
         if(seacss.alias){
@@ -167,7 +167,7 @@
 
 
     /**
-    * »ñÈ¡µ±Ç°seacss.jsËùÔÚÄ¿Â¼Â·¾¶
+    * è·å–å½“å‰seacss.jsæ‰€åœ¨ç›®å½•è·¯å¾„
     */
     function getBaseUrl(){
         if(!__base){
@@ -184,8 +184,8 @@
 
 
     /**
-    * ¼ÓÔØcss
-    * @param   {object}    link    ĞèÒª¼ÓÔØµÄcss¶ÔÏó£¬ÆäÊı¾İ½á¹¹£º
+    * åŠ è½½css
+    * @param   {object}    link    éœ€è¦åŠ è½½çš„csså¯¹è±¡ï¼Œå…¶æ•°æ®ç»“æ„ï¼š
     * {
     *      url: 'app/xxx/xxx.js',
     *      attrs: {
@@ -210,11 +210,11 @@
 
 
     /**
-    * ¸ù¾İÕıÔòÌæ»»ÇëÇóµÄcssÂ·¾¶
-    * @param   {string}    url      ĞèÒªÌæ»»µÄÔ´Â·¾¶
-    * @return  {string}    Ìæ»»ºóµÄcssÂ·¾¶
+    * æ ¹æ®æ­£åˆ™æ›¿æ¢è¯·æ±‚çš„cssè·¯å¾„
+    * @param   {string}    url      éœ€è¦æ›¿æ¢çš„æºè·¯å¾„
+    * @return  {string}    æ›¿æ¢åçš„cssè·¯å¾„
     * @desc
-    * seacss.mapĞèÒªÂú×ãÒÔÏÂÊı¾İ½á¹¹
+    * seacss.mapéœ€è¦æ»¡è¶³ä»¥ä¸‹æ•°æ®ç»“æ„
     * [['.css', '.css?v=1.0'], [/.css$/, '.css?v=1.0'], ...]
     */
     function mapCss(url){
@@ -229,9 +229,9 @@
 
 
     /**
-    * À©Õ¹¶ÔÏóÊôĞÔÖµ
-    * @param   {object}    src     ĞèÒªÀ©Õ¹µÄ¶ÔÏó
-    * @param   {object}    exts    À©Õ¹µÄÊôĞÔ¶ÔÏó
+    * æ‰©å±•å¯¹è±¡å±æ€§å€¼
+    * @param   {object}    src     éœ€è¦æ‰©å±•çš„å¯¹è±¡
+    * @param   {object}    exts    æ‰©å±•çš„å±æ€§å¯¹è±¡
     */
     function extend(src, exts){
         if(!exts){
@@ -244,9 +244,9 @@
 
 
     /**
-    * À©Õ¹Êı×éÖµ
-    * @param   {array}    src     ĞèÒªÀ©Õ¹µÄ¶ÔÏó
-    * @param   {array}    exts    À©Õ¹µÄÊôĞÔ¶ÔÏó
+    * æ‰©å±•æ•°ç»„å€¼
+    * @param   {array}    src     éœ€è¦æ‰©å±•çš„å¯¹è±¡
+    * @param   {array}    exts    æ‰©å±•çš„å±æ€§å¯¹è±¡
     */
     function extendArray(src, exts){
         if(!exts || !(exts instanceof Array)){
