@@ -27,10 +27,10 @@ buildjs.help = function() {
 // commands
 buildjs.help.cmds = [
 	'-init [src]             初始化，[src]可指定项目源文件夹，不指定则以当前所在文件夹下的front为源文件夹',
-	'-wstart [src] [conf]    启动实时文件监听',
+	'-wstart [src] [conf]    启动实时文件监听，[src]可指定项目源文件夹，[conf]可指定配置文件路径',
 	'-wstop                  停止实时文件监听',
-	'-xgettext [lang]        国际化——提取待翻译词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en',
-	'-gettext [lang]         国际化——翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en',
+	'-xgettext [lang]        提取待翻译词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en',
+	'-gettext [lang]         翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en',
 	'-release                发布',
 	'-v                      buildjs版本',
 ];
@@ -195,8 +195,10 @@ buildjs.run = function(argv) {
 			buildjs.gettext(argv[3], argv[4]);
 			break;
 		case '-release':
+			console.log('TODO');
 			break;
 		case '-v':
+			console.log('TODO');
 			break;
 		case '-h':
 			buildjs.help();

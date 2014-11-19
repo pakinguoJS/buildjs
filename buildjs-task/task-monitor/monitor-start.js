@@ -11,5 +11,5 @@ module.exports = function(src, exec, conf, pidFile){
 		}
 	});
 
-	console.log('Inotifywait of ' + src + ' has been started!\nPlease press ctrl+c to quit the cmd!');
+	console.log('Inotifywait of ' + src + ' was started!\nPlease press ctrl+c to quit the cmd!');
 }
