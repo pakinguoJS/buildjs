@@ -28,9 +28,9 @@ buildjs.help = function() {
 buildjs.help.cmds = [
 	'-init [src]             初始化，[src]可指定项目源文件夹，不指定则以当前所在文件夹下的front为源文件夹',
 	'-wstart [src] [conf]    启动实时文件监听，[src]可指定项目源文件夹，[conf]可指定配置文件路径',
-	'-wstop                  停止实时文件监听',
-	'-xgettext [lang]        提取待翻译词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en',
-	'-gettext [lang]         翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en',
+	'-wstop [src]            停止实时文件监听, [src]可指定项目源文件夹',
+	'-xgettext [lang] [conf] 提取待翻译词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
+	'-gettext [lang] [conf]  翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
 	'-release                发布',
 	'-v                      buildjs版本',
 ];
@@ -155,7 +155,7 @@ buildjs.xgettext = function(lang, conf){
 
 
 
-buildjs.gettext = function(lang, src, conf){
+buildjs.gettext = function(lang, conf){
 	lang ? null : lang = 'en';
 	conf ? null : conf = PATH.join(process.cwd(), '__buildjs', 'GETTEXT_CONFIG.json');
 	require('./buildjs-task/task-i18n/i18n-gettext.js')(lang, conf);
