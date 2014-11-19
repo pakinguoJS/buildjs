@@ -1,0 +1,36 @@
+{
+  "name": "buildjs",
+  "version": "1.2.0",
+  "description": "buildjs\r =======",
+  "main": "buildjs.cli.js",
+  "dependencies": {
+    "cmd-concat": "~0.0.1",
+    "cmd-transport": "~0.0.1",
+    "cmd-uglify": "~0.0.1",
+    "alias-conf": "~0.0.1",
+    "synchronize-files": "~0.0.1",
+    "util-mv": "~0.0.1",
+    "util-rm": "~0.0.1",
+    "htpl2js": "~0.0.1",
+    "i18n-gettext": "~0.0.1",
+    "gruntjs": "~0.0.0",
+    "contrib-cssmin": "~0.0.1",
+    "util-mkdir": "~0.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pakinguoJS/buildjs.git"
+  },
+  "keywords": [
+    "buildjs"
+  ],
+  "author": "pakinguo",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/pakinguoJS/buildjs/issues"
+  }
+}
