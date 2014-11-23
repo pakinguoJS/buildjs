@@ -9,4 +9,4 @@ asdfds
 ## title2
 asdfas
 
-[doc]
+[toc]
