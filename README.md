@@ -1,12 +1,13 @@
-buildjs
-=======
+#Buildjs
+----------
 
-New version auto building compiler for web front js&amp;css
+@author pakinguo
+>基于Seajs与Nodejs的前端微型集成方案
 
-## title1
+## 简介
 asdfds
 
-## title2
-asdfas
+## 功能
+- [alias-conf](API%20Doc/api.md#alias%20conf)
 
-[TOC]
+## 附录
