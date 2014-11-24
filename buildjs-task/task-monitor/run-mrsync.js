@@ -20,8 +20,8 @@ _TPL.test(argv[4]) ? synchronize.compareOnly(CONFIG.SYNCHROONLYSRC, CONFIG.SYNCH
 _HTPL.test(argv[4]) ? htpl2js(CONFIG.SYNCHROEXCLUDESRC, CONFIG.SYNCHROEXCLUDEDEST) : null;
 
 // 临时：i18n 翻译为en
-var i18n = require('i18n-gettext');
-var lang = 'en';
-var i18nConfig = require(PATH.join(PATH.dirname(argv[2]), 'GETTEXT_CONFIG.json'));
-i18n.gettext(i18nConfig.I18N.replace('{lang}', lang), i18nConfig.FRONTSRC, i18nConfig.FRONTDEST.replace('{lang}', lang));
-i18n.gettext(i18nConfig.I18N.replace('{lang}', lang), i18nConfig.VIEWSRC, i18nConfig.VIEWDEST.replace('{lang}', lang));
+// var i18n = require('i18n-gettext');
+// var lang = 'en';
+// var i18nConfig = require(PATH.join(PATH.dirname(argv[2]), 'GETTEXT_CONFIG.json'));
+// i18n.gettext(i18nConfig.I18N.replace('{lang}', lang), i18nConfig.FRONTSRC, i18nConfig.FRONTDEST.replace('{lang}', lang));
+// i18n.gettext(i18nConfig.I18N.replace('{lang}', lang), i18nConfig.VIEWSRC, i18nConfig.VIEWDEST.replace('{lang}', lang));
