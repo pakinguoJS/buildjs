@@ -1,5 +1,4 @@
 #Buildjs
-----------
 
 @author pakinguo
 >基于Seajs与Nodejs的前端微型集成方案
