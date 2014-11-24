@@ -31,7 +31,8 @@ buildjs.help.cmds = [
 	'-wstop [src]            停止实时文件监听, [src]可指定项目源文件夹',
 	'-xgettext [lang] [conf] 提取待翻译词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
 	'-gettext [lang] [conf]  翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
-	'-release                发布',
+	'-release init [lang]    初始化编译配置文件功能，若[lang]未指定，则默认初始化为src_min目标文件夹',
+	'-release [lang]         编译功能，[lang]为指定编译生成的目标文件夹（从src编译到[lang]），未指定则默认为src_min',
 	'-v                      buildjs版本',
 ];
 
@@ -165,6 +166,55 @@ buildjs.gettext = function(lang, conf){
 
 
 // =================================================================================================
+// 编译
+// 
+// 
+buildjs.release = function(arg1, arg2){
+	var src = process.cwd();
+	if(arg1 === 'init'){
+		arg2 ? null : arg2 = 'src_min';
+
+		var tmpPath = PATH.join(src, 'src_tmp');
+		var destPath = PATH.join(src, arg2);
+
+		var config = {
+			"CSSMINSRC": 	PATH.join(src, 'src'),
+			"CSSMINDEST": 	tmpPath,
+			"CSSMINBASE": 	'/front/' + arg2,
+			"TRANSPORTSRC": tmpPath,
+			"TRANSPORTDEST":destPath,
+			"UGLIFYSRC": 	[PATH.join(destPath, 'page'), PATH.join(destPath, 'widget')],
+			"UGLIFYBASE": 	destPath,
+			"ALIAS": 		PATH.join(src, 'conf', '__jsalias.json'),
+			"IGNORE": 		PATH.join(src, 'conf', '__ignore.json'),
+			"GRUNTJS": 		PATH.join(__dirname, 'node_modules', 'gruntjs')
+		};
+		FS.writeFileSync(PATH.join(src, '__buildjs', 'RELEASE_CONFIG_' + arg2 + '.json'), JSON.stringify(config), 'utf8');
+	}else{
+		arg1 ? null : arg1 = 'src_min';
+		var conf = PATH.join(src, '__buildjs', 'RELEASE_CONFIG_' + arg1 + '.json');
+		if(!FS.existsSync(conf)){
+			buildjs.release('init', arg1);
+		}
+		require('./buildjs-task/task-release/build-release.js')(conf);
+	}
+}
+
+
+
+
+// =================================================================================================
+// 版本号
+// 
+// 
+buildjs.version = function(){
+	var json = require('./package.json');
+	console.log('Version: ' + json.version);
+}
+
+
+
+// =================================================================================================
 // 运行时
 // 
 // 
@@ -195,10 +245,10 @@ buildjs.run = function(argv) {
 			buildjs.gettext(argv[3], argv[4]);
 			break;
 		case '-release':
-			console.log('TODO');
+			buildjs.release(argv[3], argv[4])
 			break;
 		case '-v':
-			console.log('TODO');
+			buildjs.version();
 			break;
 		case '-h':
 			buildjs.help();
