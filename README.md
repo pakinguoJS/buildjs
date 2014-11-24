@@ -2,6 +2,8 @@
 
 @author pakinguo
 >基于Seajs与Nodejs的前端微型自动化集成构建方案
+>
+>**环境要求：Linux 2.6+ / Nodejs / rsync / inotifywait**
 
 ## 前序
 随着项目业务逻辑的增加，先前的开发方式已经多少会对效率产生一定的影响。同时，对于旧页面和模块的复用，大部分方式是ctrl+c & v，而不是真正意义上的引入组件配置化。以及，对于前端性能的优化，旧项目基本没有涉足，仅仅做到的小部分，只有在移动web页面针对菲律宾马来等网络速度不是很快的国家，才有针对性地手动合并压缩静态资源文件。由于大部分项目是一人责任制，比较少有合作开发，故命名空间的污染问题基本没遇到。但是随着项目进展，迭代的快速开发，合作开发已经开始增多。
@@ -17,7 +19,9 @@
 
 ![Buildjs 简易图示](http://sz.yun.ftn.qq.com/ftn_handler/7e1e2157750e098b7c997de1ac888e0ce7f83612fec01e57ae426b3b451f9cb6/?fname=web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E4%BD%93%E7%B3%BB.png&cn=0&cv=30111&size=640*640)
 
-## 简介
+<br>
+<br>
+## Buildjs构建简述
 Buildjs为Web前端提供一套标准的目录结构和集成编译解决方案，基于Nodejs、linxu支持的inotify（应用其扩展工具inotifywait）和arsync、以及npm的Javascript构建工具gruntjs与其相关插件。主要解决了Web前端开发的一系列流程问题：
 
 1. 制定项目目录标准规范，分离业务、组件、页面的耦合
@@ -25,18 +29,25 @@ Buildjs为Web前端提供一套标准的目录结构和集成编译解决方案�
 3. 国际化支持，提供提取待翻译字符串和翻译功能
 4. 构建，包括transport、uglify
 
-由于Buildjs需要安装相关的环境程序，具体请参考[附录](#附录)
+由于Buildjs需要安装相关的环境程序，具体请参考[使用教程](#使用教程)
 
-## Buildjs功能详解
->###首要准备：标准目录规范
+<br>
+<br>
+## Buildjs功能简述
+>###一、标准目录规范
 
-制定目录规范不仅可以统一团队编码习惯，而且可以提高编码效率。除此之外，对于集成自动化构建也有所帮助。按照模块化思想，较为可取的目录标准如下：
+制定目录规范不仅可以统一团队编码习惯，而且可以提高编码效率。除此之外，对于集成自动化构建也有所帮助。按照模块化思想，可取的目录规范如下：
 <pre>
 project
     ├ front
     .   ├ conf（开发时关注的配置文件目录）
+    .       ├ __conf.js
+    .       ├ __jsalias.json
+    .       ├ __cssalias.json
+    .       ├ __ignore.json
+    .       └ conf.js（由构建工具生成）
     .   ├ __src（开发时关注的模块目录）
-    .       ├ app
+    .       ├ page
     .           ├ common
     .               ├ normalize.css
     .               ├ common.css
@@ -72,8 +83,105 @@ project
              └ login
                  └ login.tpl
 </pre>
+开发者只需专注于project/front/__src和project/front/conf，其他相关文件都由构建工具通过配置文件实时生成或发布生成。
 
-## 功能API
-- [alias-conf](API%20Doc/api.md#alias%20conf)
+\# 目录规范详细介绍请参考：[Catalog-Definition.md](API%20Doc/Catalog-Definition.md)
 
-## 附录
+<br>
+>###二、开启实时同步&国际化&发布
+
+规范好项目文件目录结构，就可以准备开始写业务或功能代码。由于开发人员专注的__src和conf的相关文件都是未经过实时同步，并非页面看到时加载的静态资源文件或页面文件，需要对项目文件夹进行实时文件监听：
+
+    // 在Linux切换到项目文件夹的路径下，如切换到/data/proj4test/front
+	xxx~: cd /data/proj4test/front
+	/data/proj4test/front: buildjs -init
+
+此时，buildjs会初始化相关的默认配置文件，生成的文件会放在/data/proj4test/front/__buildjs的文件夹下。由于默认配置文件对应的路径与文件目录结构规范一致，若进行init的时候不一致，则实时文件监听脚本会无法运行，需要对配置文件做修改，对应的配置文件有以下：
+<pre>
+../__buildjs
+     ├ CONFIG.jsson（实时同步文件的配置文件）
+     ├ GETTEXT_CONFIG.json（国际化翻译配置文件）
+     ├ XGETTEXT_CONFIG.json（提取国际化待翻译的字符串配置文件）
+     ├ mconf.log（记录inotifywait进程pid）
+     └ mrsync.log（同上）
+</pre>
+相应修改完项目路径后，再执行命令：
+
+	/data/proj4test/front: buildjs -wstart
+
+之后，在对__src或conf下的文件做增删改的时候，就会实时触发相应的操作，同步变更的文件到front/src以及views/src（路径都是以CONFIG.json配置为准）。
+
+----------
+
+
+开发完成src源版本后，若需要国际化，则可以执行以下命令提取待翻译的字符串：
+
+	/data/proj4test/front: buildjs -xgettext en
+
+会生成po文件到__buildjs/i18n。生成的字段是根据 __src下已做了标记的字符串来提取的，国际化标记支持以下四种方式，兼容html和js做标记。：
+
+	__('***')
+	__("***")
+	__'("***")'
+	__"('***')"
+
+提出成po文件后，可交给翻译小组翻译，翻译好后替换提取的po文件（若再次提取，会保留已经翻译好的字段及其对应的翻译），再执行命令即可完成国际化：
+
+	/data/proj4test/front: buildjs -gettext en
+
+会生成front/en以及views/en，文件对应front/src和views/src。
+
+----------
+
+完成开发后，可直接执行以下命令生成发布文件：
+
+	/data/proj4test/front: buildjs -release en
+
+编译工具会在原来文件的基础上进行文件处理、合并压缩以及优化等。由于Buildjs倡导的是开发者只关注__src，国际化交给翻译（提取翻译字段依然需要开发手动标记），发布时无需关注构建（全量覆盖发布），故对应生成的en或其他语言版本的文件都会被编译后的代码覆盖。当然，开发时依然可以通过国际化命令来还原文件。
+
+\# 构建流程的详细介绍请参考：[Build-Process.md](API%20Doc/Build-Process.md)
+
+<br>
+>###三、构建功能API
+
+####命令行API
+\# 参考：[Cmd-Api.md](API%20Doc/Cmd-Api.md)
+
+- 构建初始化：[buildjs -init](API%20Doc/Cmd-Api.md#buildjs-init)
+- 启动实时文件监听&同步：[buildjs -wstart](API%20Doc/Cmd-Api.md#buildjs-wstart)
+- 停止实时文件监听&同步：[buildjs -wstop](API%20Doc/Cmd-Api.md#buildjs-wstop)
+- 国际化之提取待翻译字段：[buildjs -xgettext [lang]](API%20Doc/Cmd-Api.md#buildjs-xgettext[lang])
+- 国际化之翻译字段：[buildjs -gettext [lang]](API%20Doc/Cmd-Api.md#buildjs-gettext[lang])
+- 构建发布版本：[buildjs -release [lang]](API%20Doc/Cmd-Api.md#buildjs-release[lang])
+- 查看当前编译工具版本号：[buildjs -v](API%20Doc/Cmd-Api.md#buildjs-v)
+
+----------
+
+
+####功能API
+\# 参考：[Cmd-Api.md](API%20Doc/Func-Api.md)
+
+- [alias-conf](API%20Doc/Func-Api.md#alias-conf)
+- [cmd-transport](API%20Doc/Func-Api.md#cmd-transport)
+- [cmd-uglify](API%20Doc/Func-Api.md#cmd-uglify)
+- [contrib-cssmin](API%20Doc/Func-Api.md#contrib-cssmin)
+- [i18n-gettext](API%20Doc/Func-Api.md#i18n-gettext)
+- [synchronize-files](API%20Doc/Func-Api.md#synchronize-files)
+- [util-mkdir](API%20Doc/Func-Api.md#util-mkdir)
+- [util-mv](API%20Doc/Func-Api.md#util-mv)
+- [util-rm](API%20Doc/Func-Api.md#util-rm)
+
+<br>
+## 使用教程
+>###一、环境安装
+
+- NodeJS: [Download Source](http://nodejs.org/download/)
+- rsync：[Download Source](https://rsync.samba.org/ftp/rsync/)
+- inotify-tools：[Download](http://github.com/downloads/rvoicilas/inotify-tools/inotify-tools-3.14.tar.gz)
+
+inotify-tools采用make&make install的安装方式可能存在调用时会报错，需要用ln -s方式把解压出来的inotify-tools文件夹下的src/inotifywait 链接到 /usr/local/bin/inotifywait，才可以在全局执行inotifywait。更多使用方式请参考inotify-tools的github:[inotify-tools](https://github.com/rvoicilas/inotify-tools/wiki)
+
+<br>
+>###二、Buildjs初始化
+
+1. 按照标注
