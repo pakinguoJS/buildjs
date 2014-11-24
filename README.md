@@ -14,10 +14,18 @@
 基于以上的问题，需要采用新的开发模式来提高开发效率、前端性能。面向模块化编程越来越被Web前端所接受。为了不重造轮子，于是，从requirejs和seajs中，选择了seajs，原因是比seajs更易上手，且跟nodejs保持一致的cmd规范，再加上seajs开发的项目进行构建编译有比较强力的工具后盾（gruntjs+npm，社区比较活跃）。接着，在文件目录规范上需要做调整，以模块为单位，将所有静态资源文件和页面都放在同一个模块命名的文件夹下，再用子文件夹区分。然后，需要对构建工具gruntjs进一步进行封装，提供自动化与手动化两种方案用于构建项目。最后，需要做国际化支持，这跟新的目录结构规范也相呼应。
 
 简易图示：
-![Buildjs 简易图示](http://url.cn/XIMnu8 "简易图示")
+
+![Buildjs 简易图示](http://sz.yun.ftn.qq.com/ftn_handler/7e1e2157750e098b7c997de1ac888e0ce7f83612fec01e57ae426b3b451f9cb6/?fname=web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E4%BD%93%E7%B3%BB.png&cn=0&cv=30111&size=640*640)
 
 ## 简介
-Buildjs为
+Buildjs为Web前端提供一套标准的目录结构和集成编译解决方案，基于Nodejs、linxu支持的inotify（应用其扩展工具inotifywait）和arsync、以及npm的Javascript构建工具gruntjs与其相关插件。主要解决了Web前端开发的一系列流程问题：
+
+1. 制定项目目录标准规范，分离业务、组件、页面的耦合
+2. 开启实时文件监听功能，即时做部分编译
+3. 国际化支持，提供提取待翻译字符串和翻译功能
+4. 构建，包括transport、uglify
+
+由于Buildjs需要安装相关的环境程序，具体请参考[附录](#附录)
 
 ## 功能
 - [alias-conf](API%20Doc/api.md#alias%20conf)
