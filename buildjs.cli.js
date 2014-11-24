@@ -193,9 +193,12 @@ buildjs.release = function(arg1, arg2){
 	}else{
 		arg1 ? null : arg1 = 'src_min';
 		var conf = PATH.join(src, '__buildjs', 'RELEASE_CONFIG_' + arg1 + '.json');
+		// 不存在配置文件则新建
 		if(!FS.existsSync(conf)){
 			buildjs.release('init', arg1);
 		}
+		// 先国际化，再构建
+		arg1 !== 'src_min' ? require('./buildjs-task/task-i18n/i18n-gettext.js')(arg1, PATH.join(src, '__buildjs', 'GETTEXT_CONFIG.json')) : null;
 		require('./buildjs-task/task-release/build-release.js')(conf);
 	}
 }
