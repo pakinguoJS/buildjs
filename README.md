@@ -1,9 +1,12 @@
 #Buildjs
 
-@author pakinguo
->基于Seajs与Nodejs的前端微型自动化集成构建方案
->
+>基于Seajs与Nodejs的前端集成自动化构建方案
+
 >**环境要求：Linux 2.6+ / Nodejs / rsync / inotifywait**
+
+>标签：*Web前端集成自动化构建* , *Buildjs*
+
+<br>
 
 ## 前序
 随着项目业务逻辑的增加，先前的开发方式已经多少会对效率产生一定的影响。同时，对于旧页面和模块的复用，大部分方式是ctrl+c & v，而不是真正意义上的引入组件配置化。以及，对于前端性能的优化，旧项目基本没有涉足，仅仅做到的小部分，只有在移动web页面针对菲律宾马来等网络速度不是很快的国家，才有针对性地手动合并压缩静态资源文件。由于大部分项目是一人责任制，比较少有合作开发，故命名空间的污染问题基本没遇到。但是随着项目进展，迭代的快速开发，合作开发已经开始增多。
@@ -181,7 +184,32 @@ project
 
 inotify-tools采用make&make install的安装方式可能存在调用时会报错，需要用ln -s方式把解压出来的inotify-tools文件夹下的src/inotifywait 链接到 /usr/local/bin/inotifywait，才可以在全局执行inotifywait。更多使用方式请参考inotify-tools的github:[inotify-tools](https://github.com/rvoicilas/inotify-tools/wiki)
 
-<br>
->###二、Buildjs初始化
+将当前github的以下文件（夹）部署到服务器上：
 
-1. 按照标注
+- bin
+- buildjs-task
+- node_modules
+- buildjs.cli.js
+- package.json
+
+之后执行
+	
+	~: ln -s xxx/bin/buildjs /usr/local/bin/buildjs
+
+将buildjs添加到全局环境中。
+
+<br>
+>###二、Buildjs使用
+
+1. 按照标准目录结构创建项目（只需要放置前端模块的文件夹front）
+2. 切换到front路径下，执行初始化命令：buildjs -init；若文件目录结构没有按照标准目录结构设定，则需要手动更改front/__buildjs下的*.json配置文件，具体参考[buildjs -init](API%20Doc/Cmd-Api.md#buildjs-init)；
+3. 停止实时同步文件监听功能：buildjs -wstop；重新打开监听功能：buildjs -wstart；
+4. 国际化提取待翻译字段：buildjs -xgettext en，需要按照4种标记方式做记号（参考上文）；
+5. 国际化翻译代码：buildjs -gettext en，确保提取出来的po文件已经过翻译；
+6. 构建发布代码：buildjs -release en。
+
+<br><br>
+----------
+11/25/2014 12:05:31 AM By pakinguo
+
+
