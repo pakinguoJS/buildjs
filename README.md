@@ -1,7 +1,7 @@
 #Buildjs
 
 @author pakinguo
->基于Seajs与Nodejs的前端微型集成方案
+>基于Seajs与Nodejs的前端微型自动化集成构建方案
 
 ## 前序
 随着项目业务逻辑的增加，先前的开发方式已经多少会对效率产生一定的影响。同时，对于旧页面和模块的复用，大部分方式是ctrl+c & v，而不是真正意义上的引入组件配置化。以及，对于前端性能的优化，旧项目基本没有涉足，仅仅做到的小部分，只有在移动web页面针对菲律宾马来等网络速度不是很快的国家，才有针对性地手动合并压缩静态资源文件。由于大部分项目是一人责任制，比较少有合作开发，故命名空间的污染问题基本没遇到。但是随着项目进展，迭代的快速开发，合作开发已经开始增多。
@@ -27,7 +27,53 @@ Buildjs为Web前端提供一套标准的目录结构和集成编译解决方案�
 
 由于Buildjs需要安装相关的环境程序，具体请参考[附录](#附录)
 
-## 功能
+## Buildjs功能详解
+>###首要准备：标准目录规范
+
+制定目录规范不仅可以统一团队编码习惯，而且可以提高编码效率。除此之外，对于集成自动化构建也有所帮助。按照模块化思想，较为可取的目录标准如下：
+<pre>
+project
+    ├ front
+    .   ├ conf（开发时关注的配置文件目录）
+    .   ├ __src（开发时关注的模块目录）
+    .       ├ app
+    .           ├ common
+    .               ├ normalize.css
+    .               ├ common.css
+    .               ├ common.js
+    .               └ view
+    .                   ├ head.tpl
+    .                   └ foot.tpl
+    .           ├ login
+    .               ├ css
+    .                   └ index.css
+    .               ├ img
+    .                   ├ icon.png
+    .                   ├ index.png
+    .                   └ ...
+    .               ├ js
+    .                   └ index.js
+    .               └ view
+    .                   └ login.tpl(运行工具后，不会同步到src下，而是同步到views)
+    .       ├ lib（基本上是增量添加第三方库，可考虑按需放到CDN）
+    .       └ widget
+    .          ├ alert
+    .              ├ alert.css
+    .              ├ alert.js
+    .              └ alert.htpl (通过编译工具 => alert.htpl.js, 符合seajs模块)
+    .    ├ src（从__src生成而来通过编译工具同步生成，目录结构与__src一致，但出去view文件夹）
+    .    ├ en-US（由国际化工具生成的）
+    .    └ zh-TW（同上）
+    └ views（有工具同步front下的__src中的view层文件到此目录，只保留两层目录结构）
+         ├ src
+             ├ common
+                 ├ head.tpl（只保留两层目录结构：模块名/文件名.tpl）
+                 └ foot.tpl
+             └ login
+                 └ login.tpl
+</pre>
+
+## 功能API
 - [alias-conf](API%20Doc/api.md#alias%20conf)
 
 ## 附录
