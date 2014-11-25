@@ -88,8 +88,7 @@ project
 </pre>
 开发者只需专注于project/front/__src和project/front/conf，其他相关文件都由构建工具通过配置文件实时生成或发布生成。
 
-\# 目录规范详细介绍请参考：[Catalog-Definition.md](API%20Doc/Catalog-Definition.md)
-
+\# 目录规范详细介绍请参考：<a href="API%20Doc/Catelog-Definition.md" taget="_blank"/>Catelog-Definition.md</a>
 <br>
 >###二、开启实时同步&国际化&发布
 
