@@ -89,6 +89,7 @@ project
 开发者只需专注于project/front/__src和project/front/conf，其他相关文件都由构建工具通过配置文件实时生成或发布生成。
 
 \# 目录规范详细介绍请参考：<a href="API%20Doc/Catelog-Definition.md" target="_blank">Catelog-Definition.md</a>
+
 <br>
 >###二、开启实时同步&国际化&发布
 
@@ -141,13 +142,13 @@ project
 
 编译工具会在原来文件的基础上进行文件处理、合并压缩以及优化等。由于Buildjs倡导的是开发者只关注__src，国际化交给翻译（提取翻译字段依然需要开发手动标记），发布时无需关注构建（全量覆盖发布），故对应生成的en或其他语言版本的文件都会被编译后的代码覆盖。当然，开发时依然可以通过国际化命令来还原文件。
 
-\# 构建流程的详细介绍请参考：[Build-Process.md](API%20Doc/Build-Process.md)
+\# 构建流程的详细介绍请参考：<a href="API%20Doc/Build-Process.md" target="_blank">Build-Process.md</a>
 
 <br>
 >###三、构建功能API
 
 ####命令行API
-\# 参考：[Cmd-Api.md](API%20Doc/Cmd-Api.md)
+\# 参考：<a href="API%20Doc/Cmd-Api.md" target="_blank">Cmd-Api.md</a>
 
 - 构建初始化：[buildjs -init](API%20Doc/Cmd-Api.md#buildjs-init)
 - 启动实时文件监听&同步：[buildjs -wstart](API%20Doc/Cmd-Api.md#buildjs-wstart)
