@@ -2,9 +2,11 @@
 
 >基于Seajs与Nodejs的前端集成自动化构建方案
 
+>**技术前提：熟悉<a href="http://seajs.org/" target="_blank">SeaJS</a>及<a href="http://gruntjs.com/" target="_blank">gruntjs</a>构建工具，并掌握<a href="https://github.com/spmjs/grunt-cmd-transport/" target="_blank">grunt-cmd-transport</a>和<a href="https://github.com/gruntjs/grunt-contrib-uglify" target="_blank">grunt-contrib-uglify</a>构建配置方式**
+
 >**环境要求：Linux 2.6+ / Nodejs / rsync / inotifywait**
 
->标签：*Web前端集成自动化构建* , *Buildjs*
+>标签：*基于SeaJS* , *Web前端集成自动化构建* , *Buildjs*
 
 <br>
 
