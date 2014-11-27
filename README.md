@@ -152,13 +152,13 @@ project
 ####命令行API
 \# 参考：<a href="API%20Doc/Cmd-Api.md" target="_blank">Cmd-Api.md</a>
 
-- 构建初始化：[buildjs -init](API%20Doc/Cmd-Api.md#buildjs-init)
-- 启动实时文件监听&同步：[buildjs -wstart](API%20Doc/Cmd-Api.md#buildjs-wstart)
-- 停止实时文件监听&同步：[buildjs -wstop](API%20Doc/Cmd-Api.md#buildjs-wstop)
-- 国际化之提取待翻译字段：[buildjs -xgettext [lang]](API%20Doc/Cmd-Api.md#buildjs-xgettext[lang])
-- 国际化之翻译字段：[buildjs -gettext [lang]](API%20Doc/Cmd-Api.md#buildjs-gettext[lang])
-- 构建发布版本：[buildjs -release [lang]](API%20Doc/Cmd-Api.md#buildjs-release[lang])
-- 查看当前编译工具版本号：[buildjs -v](API%20Doc/Cmd-Api.md#buildjs-v)
+- 构建初始化：[buildjs -init](API%20Doc/Cmd-Api.md#buildjs--init)
+- 启动实时文件监听&同步：[buildjs -wstart](API%20Doc/Cmd-Api.md#buildjs--wstart)
+- 停止实时文件监听&同步：[buildjs -wstop](API%20Doc/Cmd-Api.md#buildjs--wstop)
+- 国际化之提取待翻译字段：[buildjs -xgettext [lang]](API%20Doc/Cmd-Api.md#buildjs--xgettext-lang)
+- 国际化之翻译字段：[buildjs -gettext [lang]](API%20Doc/Cmd-Api.md#buildjs--gettext-lang)
+- 构建发布版本：[buildjs -release [lang]](API%20Doc/Cmd-Api.md#buildjs--release-lang)
+- 查看当前编译工具版本号：[buildjs -v](API%20Doc/Cmd-Api.md#buildjs--v)
 
 ----------
 

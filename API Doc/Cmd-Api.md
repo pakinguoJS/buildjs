@@ -5,7 +5,7 @@
 *xx/front*为例。**
 
 <br><br>
-##buildjs-init
+##buildjs -init
 > **初始化配置文件、实时文件监听、同步、html片段文件转化为seajs模块**
 
 	// 确保项目目录结构与Buildjs给出的标准目录规范一致
@@ -22,7 +22,7 @@
 	|
 
 <br><br>
-##buildjs-wstart
+##buildjs -wstart
 >启动buildjs实时文件监听+同步+转化
 
 	xx/front: buildjs -wstart
@@ -38,7 +38,7 @@
 3. xx/front/conf下的源文件有做变动，则生成新的前端配置文件。
 
 <br><br>
-##buildjs-wstop
+##buildjs -wstop
 >停止buildjs实时文件监听功能
 
 	xx/front: buildjs -wstop
@@ -47,3 +47,48 @@
 
 <br><br>
 ##buildjs -xgettext [lang]
+>提取待翻译的字符串
+>
+>**参数[lang]：支持多语言，以","隔开，如：en-US,zh-TW,zh-CN**
+
+	xx/front: buildjs -xgettext en
+
+此命令用于提取代码中需要翻译的字符串，字符串的标记方式遵循以下四种方式：
+
+	__('***')
+	__("***")
+	__'("***")'
+	__"('***')"
+
+其中，后两者适合在js中做提取标记，这样不会有在src下源文件的开发预览可能出现的代码报错问题。
+
+默认提出成po文件，会输出到xx/front/__buildjs/i18n文件夹下，文件命名以i18n.{lang}.po格式命名。已存在的po文件不会被提取的直接覆盖，而是保留已经提取且翻译好的条目，并新增后续编码新产生的条目。
+
+<br><br>
+##buildjs -gettext [lang]
+>翻译代码中已做提取标记的字符串
+
+>**参数[lang]同-xgettext**
+
+	xx/front: buildjs -gettext en
+
+会以xx/front/__buildjs/i18n/i18n.en.po文件为翻译源，对xx/front/src和xx/views/src中有做提取标记的字符串进行翻译，分别生成到xx/front/en和xx/views/en。
+
+<br><br>
+##buildjs -release [lang]
+>构建发布版本
+
+>**参数[lang]同-xgettext**
+
+	xx/front: buildjs -release en
+
+集成构建发布，自动化处理css的图片资源相对路径、css压缩（尚未支持同步请求的合并）、seajs模块合并压缩（包括css转化成的seajs模块）。
+
+<br><br>
+##buildjs -v
+>打印当前buildjs的版本号
+
+	~: buildjs -v
+	// ouput: Version: 1.2.0
+
+读取package.json的version字段。
