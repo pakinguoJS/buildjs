@@ -1,4 +1,4 @@
-#Buildjs
+   #Buildjs
 
 >基于Seajs与Nodejs的前端集成自动化构建方案
 
@@ -164,7 +164,7 @@ project
 
 
 ####功能API
-\# 参考：[Cmd-Api.md](API%20Doc/Func-Api.md)
+\# 参考：[Func-Api.md](API%20Doc/Func-Api.md)
 
 - [alias-conf](API%20Doc/Func-Api.md#alias-conf)
 - [cmd-transport](API%20Doc/Func-Api.md#cmd-transport)
