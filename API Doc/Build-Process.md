@@ -139,3 +139,46 @@ Buildjs使用流程按以下步骤执行：
 
 <br><br>
 ##发布构建版本
+构建发布版本只需执行：
+<pre>xxx/front: buildjs -release en</pre>
+
+此时，Buildjs会先生成发布需要的配置文件RELEASE_CONFIG_en.json，接着执行国际化，最后才执行发布构建。发布构建需要的配置文件对应如下：
+
+	// RELEASE_CONFIG_en.json
+	{
+		// cssmin的源路径，一般为实时文件同步脚本设置的输出目标路径
+		"CSSMINSRC": 	"xxx/front/src",
+
+		// cssmin输出的文件路径，设置临时目录，为的是做中间处理，构建完成后会删除此目录
+		"CSSMINDEST": 	"xxx/front/src_tmp",
+
+		// 这个字段的设置是为了把css中出现的图片资源的相对路径替换为以"/front/en"这种方式的相对路径，
+		// 一般项目是有域名的，域名访问的图片资源等在css中书写多为相对当前css文件的目录路径，
+		// 构建成seajs模块的内联方式的css不能以这种相对路径方式访问，会被定位成以页面基准的相对路径，这样就会访问不到图片资源。
+		"CSSMINBASE": 	"/front/en",
+
+		// cmd-transport的源文件夹
+		"TRANSPORTSRC": "xxx/front/src_tmp",
+
+		// cmd-transport的目标文件夹
+		"TRANSPORTDEST":"xxx/front/en",
+
+		// 需要合并压缩的自动检索模块的目录，一般为标准目录规范的page和widget文件夹，若需要添加，可在第一次构建后再修改配置文件，再重新构建。
+		"UGLIFYSRC": 	["xxx/front/en/page", "xxx/front/en/widget"],
+
+		// uglify的根目录路径，与seajs的conf的base字段相对应
+		"UGLIFYBASE": 	"xxx/front/en",
+
+		// 同上文
+		"ALIAS": 		"xxx/front/conf/__jsalias.json",
+
+		// 同上文
+		"IGNORE": 		"xxx/front/conf/__ignore.json",
+
+		// 此字段是由工具直接生成，一般是buildjs.cli.js所在文件夹下的node_modules/gruntjs
+		"GRUNTJS": 		"xxx/buildjs/node_modules/gruntjs"
+	}
+
+第一次构建会生成以上的配置文件，若已经手动创建好，则不会再生成新的配置文件，需要根据项目做更改则只需修改配置文件的字段值即可。
+
+\# 更多API使用方式请参考：<a href="API%20Doc/Cmd-Api.md" target="_blank">命令行API</a>和<a href="API%20Doc/Func-Api.md" target="_blank">功能组件API</a>
