@@ -92,3 +92,8 @@
 	// ouput: Version: 1.2.0
 
 读取package.json的version字段。
+
+
+<br><br>
+----------
+11/28/2014 By pakinguo

@@ -182,3 +182,7 @@ Buildjs使用流程按以下步骤执行：
 第一次构建会生成以上的配置文件，若已经手动创建好，则不会再生成新的配置文件，需要根据项目做更改则只需修改配置文件的字段值即可。
 
 \# 更多API使用方式请参考：<a href="API%20Doc/Cmd-Api.md" target="_blank">命令行API</a>和<a href="API%20Doc/Func-Api.md" target="_blank">功能组件API</a>
+
+<br><br>
+----------
+11/27/2014 By pakinguo
