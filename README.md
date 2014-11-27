@@ -1,4 +1,4 @@
-   #Buildjs
+#Buildjs
 
 >基于Seajs与Nodejs的前端集成自动化构建方案
 
