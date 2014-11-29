@@ -170,6 +170,7 @@ project
 - [cmd-transport](API%20Doc/Func-Api.md#cmd-transport)
 - [cmd-uglify](API%20Doc/Func-Api.md#cmd-uglify)
 - [contrib-cssmin](API%20Doc/Func-Api.md#contrib-cssmin)
+- [htpl2js](API%20Doc/Func-Api.md#ihtpl2js)
 - [i18n-gettext](API%20Doc/Func-Api.md#i18n-gettext)
 - [synchronize-files](API%20Doc/Func-Api.md#synchronize-files)
 - [util-mkdir](API%20Doc/Func-Api.md#util-mkdir)
