@@ -26,13 +26,13 @@ buildjs.help = function() {
 
 // commands
 buildjs.help.cmds = [
-	'-init [src]             初始化，[src]可指定项目源文件夹，不指定则以当前所在文件夹下的front为源文件夹',
-	'-wstart [src] [conf]    启动实时文件监听，[src]可指定项目源文件夹，[conf]可指定配置文件路径',
-	'-wstop [src]            停止实时文件监听, [src]可指定项目源文件夹',
-	'-xgettext [lang] [conf] 提取待翻译词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
-	'-gettext [lang] [conf]  翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
-	'-release init [lang]    初始化编译配置文件功能，若[lang]未指定，则默认初始化为src_min目标文件夹',
-	'-release [lang]         编译功能，[lang]为指定编译生成的目标文件夹（从src编译到[lang]），未指定则默认为src_min',
+	'init [src]             初始化，[src]可指定项目源文件夹，不指定则以当前所在文件夹下的front为源文件夹',
+	'wstart [src] [conf]    启动实时文件监听，[src]可指定项目源文件夹，[conf]可指定配置文件路径',
+	'wstop [src]            停止实时文件监听, [src]可指定项目源文件夹',
+	'xgettext [lang] [conf] 提取待翻译词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
+	'gettext [lang] [conf]  翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
+	'release init [lang]    初始化编译配置文件功能，若[lang]未指定，则默认初始化为src_min目标文件夹',
+	'release [lang]         编译功能，[lang]为指定编译生成的目标文件夹（从src编译到[lang]），未指定则默认为src_min',
 	'-v                      buildjs版本',
 ];
 
@@ -232,22 +232,22 @@ buildjs.run = function(argv) {
 	}
 
 	switch (argv[2]) {
-		case '-init':
+		case 'init':
 			buildjs.init(argv[3]);
 			break;
-		case '-wstart':
+		case 'wstart':
 			buildjs.startMonitor(argv[3], argv[4]);
 			break;
-		case '-wstop':
+		case 'wstop':
 			buildjs.stopMonitor(argv[3]);
 			break;
-		case '-xgettext':
+		case 'xgettext':
 			buildjs.xgettext(argv[3], argv[4]);
 			break;
-		case '-gettext':
+		case 'gettext':
 			buildjs.gettext(argv[3], argv[4]);
 			break;
-		case '-release':
+		case 'release':
 			buildjs.release(argv[3], argv[4])
 			break;
 		case '-v':
