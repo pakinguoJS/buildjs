@@ -22,7 +22,7 @@
 
 简易图示：
 
-![Buildjs 简易图示](http://sz.yun.ftn.qq.com/ftn_handler/7e1e2157750e098b7c997de1ac888e0ce7f83612fec01e57ae426b3b451f9cb6/?fname=web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E4%BD%93%E7%B3%BB.png&cn=0&cv=30111&size=640*640)
+![Buildjs 简易图示](http://a2.qpic.cn/psb?/V12tiger2jtCIv/Z1FfOwTb9MffafILSUKahw5zEhP8X0ycyM7*9sEk9MU!/b/dAcAAAAAAAAA&bo=3APgAQAAAAADBxw!&rf=viewer_4)
 
 <br>
 <br>

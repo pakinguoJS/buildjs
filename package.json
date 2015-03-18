@@ -1,5 +1,5 @@
 {
-  "name": "buildjs",
+  "name": "buildjs-beta",
   "version": "1.2.0",
   "description": "buildjs\r =======",
   "main": "buildjs.cli.js",
@@ -26,7 +26,7 @@
     "url": "https://github.com/pakinguoJS/buildjs.git"
   },
   "keywords": [
-    "buildjs"
+    "buildjs", "buildjs-beta"
   ],
   "author": "pakinguo",
   "license": "None",
