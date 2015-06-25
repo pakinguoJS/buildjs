@@ -1,11 +1,11 @@
 /*
  * buildjs cli
  */
-var FS 		= require('fs');
-var PATH 	= require('path');
-var EXEC 	= require('child_process').exec;
+var FS = require('fs');
+var PATH = require('path');
+var EXEC = require('child_process').exec;
 
-var mkdir 	= require('util-mkdir');
+var mkdir = require('util-mkdir');
 
 var buildjs = {};
 
@@ -33,6 +33,7 @@ buildjs.help.cmds = [
 	'gettext [lang] [conf]  翻译标记的词条, [lang]可指定语言，如：en，用\',\'隔开，默认值为en；[conf]指定配置文件路径',
 	'release init [lang]    初始化编译配置文件功能，若[lang]未指定，则默认初始化为src_min目标文件夹',
 	'release [lang]         编译功能，[lang]为指定编译生成的目标文件夹（从src编译到[lang]），未指定则默认为src_min',
+	'publish [lang]         编译功能，指定压缩某种语言下的静态资源文件',
 	'-v                      buildjs版本',
 ];
 
@@ -56,18 +57,18 @@ buildjs.init = function(src) {
 	// 创建放置配置文件及监听pid的文件夹
 	var buildDir = PATH.join(src, '__buildjs');
 	mkdir(buildDir);
-	
+
 	// 生成实时监听及htpl2js的配置文件
 	var monitorConfig = {
-		"SRC": 		frontSrc,
-		"CONFSRC": 	PATH.join(seajsConf, '__conf.js'),
+		"SRC": frontSrc,
+		"CONFSRC": PATH.join(seajsConf, '__conf.js'),
 		"CONFDEST": PATH.join(seajsConf, 'conf.js'),
-		"JSALIAS": 	PATH.join(seajsConf, '__jsalias.json'),
+		"JSALIAS": PATH.join(seajsConf, '__jsalias.json'),
 		"CSSALIAS": PATH.join(seajsConf, '__cssalias.json'),
-		"SYNCHROEXCLUDESRC": 	frontSrc,
-		"SYNCHROEXCLUDEDEST": 	PATH.join(src, 'src'),
-		"SYNCHROONLYSRC": 		PATH.join(frontSrc, 'page'),
-		"SYNCHROONLYDEST": 		PATH.join(PATH.dirname(src), 'views/src'),
+		"SYNCHROEXCLUDESRC": frontSrc,
+		"SYNCHROEXCLUDEDEST": PATH.join(src, 'src'),
+		"SYNCHROONLYSRC": PATH.join(frontSrc, 'page'),
+		"SYNCHROONLYDEST": PATH.join(PATH.dirname(src), 'views/src'),
 		"VERSION": ""
 	}
 	var monitorConfigPath = PATH.join(buildDir, 'CONFIG.json');
@@ -77,28 +78,28 @@ buildjs.init = function(src) {
 	// i18n配置文件
 	var i18nDir = PATH.join(buildDir, 'i18n');
 	var xgettextConfig = {
-		"SRC": 		frontSrc,
-		"DESTDIR": 	i18nDir,
+		"SRC": frontSrc,
+		"DESTDIR": i18nDir,
 		"DESTFILE": PATH.join(i18nDir, 'i18n.{lang}.po'),
-		"EXIST": 	PATH.join(i18nDir, 'i18n.{lang}.po'),
-		"TYPE": 	"po",
-		"MERGE": 	true
+		"EXIST": PATH.join(i18nDir, 'i18n.{lang}.po'),
+		"TYPE": "po",
+		"MERGE": true
 	}
 	FS.writeFileSync(PATH.join(buildDir, 'XGETTEXT_CONFIG.json'), JSON.stringify(xgettextConfig), 'utf8');
 
 	var gettextConfig = {
-		"I18N": 		PATH.join(i18nDir, 'i18n.{lang}.po'),
-		"FRONTSRC": 	PATH.join(src, 'src'),
-		"FRONTDEST": 	PATH.join(src, '{lang}'),
-		"VIEWSRC": 		PATH.join(PATH.dirname(monitorConfig.SYNCHROONLYDEST), 'src'),
-		"VIEWDEST": 	PATH.join(PATH.dirname(monitorConfig.SYNCHROONLYDEST), '{lang}'),
-		"REPSTR": 		""
+		"I18N": PATH.join(i18nDir, 'i18n.{lang}.po'),
+		"FRONTSRC": PATH.join(src, 'src'),
+		"FRONTDEST": PATH.join(src, '{lang}'),
+		"VIEWSRC": PATH.join(PATH.dirname(monitorConfig.SYNCHROONLYDEST), 'src'),
+		"VIEWDEST": PATH.join(PATH.dirname(monitorConfig.SYNCHROONLYDEST), '{lang}'),
+		"REPSTR": ""
 	}
 	FS.writeFileSync(PATH.join(buildDir, 'GETTEXT_CONFIG.json'), JSON.stringify(gettextConfig), 'utf8');
 
 
 	// 执行初始化脚本
-	require('./buildjs-task/task-monitor/monitor-init.js')(monitorConfigPath, function(){
+	require('./buildjs-task/task-monitor/monitor-init.js')(monitorConfigPath, function() {
 		// 执行监听
 		buildjs.startMonitor();
 	});
@@ -115,7 +116,7 @@ buildjs.init = function(src) {
  * @param  {string} conf 指定相关配置文件，默认为init中src下新建的__buildjs文件夹下的CONFIG.json文件
  * @return {null}      null
  */
-buildjs.startMonitor = function(src, conf){
+buildjs.startMonitor = function(src, conf) {
 	src ? null : src = PATH.join(process.cwd(), '__src/');
 	conf ? null : conf = PATH.join(process.cwd(), '__buildjs', 'CONFIG.json');
 	var mstart = require('./buildjs-task/task-monitor/monitor-start.js');
@@ -135,11 +136,10 @@ buildjs.startMonitor = function(src, conf){
  * @param  {string} src 默认为当前执行脚本的文件夹下的__buildjs文件夹
  * @return {null}     null
  */
-buildjs.stopMonitor = function(src){
+buildjs.stopMonitor = function(src) {
 	src ? null : src = PATH.join(process.cwd(), '__buildjs');
 	require('./buildjs-task/task-monitor/monitor-stop.js')(src);
 }
-
 
 
 
@@ -148,7 +148,7 @@ buildjs.stopMonitor = function(src){
 // 
 // 
 
-buildjs.xgettext = function(lang, conf){
+buildjs.xgettext = function(lang, conf) {
 	lang ? null : lang = 'en';
 	conf ? null : conf = PATH.join(process.cwd(), '__buildjs', 'XGETTEXT_CONFIG.json');
 	require('./buildjs-task/task-i18n/i18n-xgettext.js')(lang, conf);
@@ -156,7 +156,7 @@ buildjs.xgettext = function(lang, conf){
 
 
 
-buildjs.gettext = function(lang, conf){
+buildjs.gettext = function(lang, conf) {
 	lang ? null : lang = 'en';
 	conf ? null : conf = PATH.join(process.cwd(), '__buildjs', 'GETTEXT_CONFIG.json');
 	require('./buildjs-task/task-i18n/i18n-gettext.js')(lang, conf);
@@ -164,37 +164,36 @@ buildjs.gettext = function(lang, conf){
 
 
 
-
 // =================================================================================================
 // 编译
 // 
 // 
-buildjs.release = function(arg1, arg2){
+buildjs.release = function(arg1, arg2) {
 	var src = process.cwd();
-	if(arg1 === 'init'){
+	if (arg1 === 'init') {
 		arg2 ? null : arg2 = 'src_min';
 
 		var tmpPath = PATH.join(src, 'src_tmp');
 		var destPath = PATH.join(src, arg2);
 
 		var config = {
-			"CSSMINSRC": 	PATH.join(src, 'src'),
-			"CSSMINDEST": 	tmpPath,
-			"CSSMINBASE": 	'/front/' + arg2,
+			"CSSMINSRC": PATH.join(src, 'src'),
+			"CSSMINDEST": tmpPath,
+			"CSSMINBASE": '/front/' + arg2,
 			"TRANSPORTSRC": tmpPath,
-			"TRANSPORTDEST":destPath,
-			"UGLIFYSRC": 	[PATH.join(destPath, 'page'), PATH.join(destPath, 'widget')],
-			"UGLIFYBASE": 	destPath,
-			"ALIAS": 		PATH.join(src, 'conf', '__jsalias.json'),
-			"IGNORE": 		PATH.join(src, 'conf', '__ignore.json'),
-			"GRUNTJS": 		PATH.join(__dirname, 'node_modules', 'gruntjs')
+			"TRANSPORTDEST": destPath,
+			"UGLIFYSRC": [PATH.join(destPath, 'page'), PATH.join(destPath, 'widget')],
+			"UGLIFYBASE": destPath,
+			"ALIAS": PATH.join(src, 'conf', '__jsalias.json'),
+			"IGNORE": PATH.join(src, 'conf', '__ignore.json'),
+			"GRUNTJS": PATH.join(__dirname, 'node_modules', 'gruntjs')
 		};
 		FS.writeFileSync(PATH.join(src, '__buildjs', 'RELEASE_CONFIG_' + arg2 + '.json'), JSON.stringify(config), 'utf8');
-	}else{
+	} else {
 		arg1 ? null : arg1 = 'src_min';
 		var conf = PATH.join(src, '__buildjs', 'RELEASE_CONFIG_' + arg1 + '.json');
 		// 不存在配置文件则新建
-		if(!FS.existsSync(conf)){
+		if (!FS.existsSync(conf)) {
 			buildjs.release('init', arg1);
 		}
 		// 先国际化，再构建
@@ -205,12 +204,37 @@ buildjs.release = function(arg1, arg2){
 
 
 
+// =================================================================================================
+// 编译 version2
+// 
+// 
+buildjs.publish = function(lang, conf) {
+	lang ? lang = lang.split(',') : lang = 'en';
+	conf ? null : conf = PATH.join(process.cwd(), '__buildjs', 'CONFIG.json');
+	var CONFIG = require(conf);
+	var publish = require('cssmin-transport-uglify');
+	var gruntPath = PATH.join(__dirname, 'node_modules', 'gruntjs');
+	var alias = require(CONFIG.JSALIAS);
+
+	inner(lang);
+
+	function inner(lang) {
+		if (lang.length > 0) {
+			var itm = lang.shift();
+			publish(itm, PATH.join(CONFIG.COMPRESSSRC.replace('{lang}', itm)), PATH.join(CONFIG.COMPRESSEXCLUDE.replace('{lang}', itm)), gruntPath, alias, function() {
+				inner(lang);
+			});
+		}
+	}
+}
+
+
 
 // =================================================================================================
 // 版本号
 // 
 // 
-buildjs.version = function(){
+buildjs.version = function() {
 	var json = require('./package.json');
 	console.log('Version: ' + json.version);
 }
@@ -248,7 +272,10 @@ buildjs.run = function(argv) {
 			buildjs.gettext(argv[3], argv[4]);
 			break;
 		case 'release':
-			buildjs.release(argv[3], argv[4])
+			buildjs.release(argv[3], argv[4]);
+			break;
+		case 'publish':
+			buildjs.publish(argv[3], argv[4]);
 			break;
 		case '-v':
 			buildjs.version();

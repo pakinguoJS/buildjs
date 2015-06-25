@@ -1,0 +1,8 @@
+{
+	"SRC": "/data/web/front/__src/",
+	"DESTDIR": "/data/web/front/__buildjs/i18n",
+	"DESTFILE": "/data/web/front/__buildjs/i18n/i18n.{lang}.po",
+	"EXIST": "/data/web/front/__buildjs/i18n/i18n.{lang}.po",
+	"TYPE": "po",
+	"MERGE": true
+}

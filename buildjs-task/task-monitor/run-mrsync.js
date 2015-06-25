@@ -19,6 +19,10 @@ _TPL.test(argv[4]) ? synchronize.compareOnly(CONFIG.SYNCHROONLYSRC, CONFIG.SYNCH
 // 功能：将指定文件类型，如.htpl转化为Seajs模块
 _HTPL.test(argv[4]) ? htpl2js(CONFIG.SYNCHROEXCLUDESRC, CONFIG.SYNCHROEXCLUDEDEST) : null;
 
+// 功能：版本控制
+require('alias-conf')(CONFIG.CONFSRC, CONFIG.CONFDEST, CONFIG.JSALIAS, CONFIG.CSSALIAS, CONFIG.VERSION ? CONFIG.VERSION : new Date().getTime());
+require('version-conf')(CONFIG.VERSIONSRC, CONFIG.VERSIONDEST);
+
 // 临时：i18n 翻译为en
 // var i18n = require('i18n-gettext');
 // var lang = 'en';
